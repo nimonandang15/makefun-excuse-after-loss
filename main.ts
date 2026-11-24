@@ -31,6 +31,12 @@ if (/[\u0000-\u001f\u007f]/.test(text)) {
   throw new Error("entry contains control characters");
 }
 
+// A line of pure punctuation would pass every check above yet say nothing;
+// the excuse must contain at least one letter.
+if (!/[A-Za-z]/.test(text)) {
+  throw new Error("entry contains no letters");
+}
+
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 const outPath = join(outDir, "entry.txt");
